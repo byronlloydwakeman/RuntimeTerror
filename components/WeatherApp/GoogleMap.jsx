@@ -33,7 +33,7 @@ export const GoogleMap = (coords) => {
     };
 
     initMap();
-  }, []);
+  }, [coords.latitude, coords.longitude]);
 
   return <div style={{ height: '600px' }} ref={mapRef}></div>;
 };
