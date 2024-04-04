@@ -13,6 +13,13 @@
       "tags": ["Algorithms", "Game design"],
       "description": "A Tic Tac Toe game which includes both CPU and versus modes.",
       "link": "/challenges/tictactoe"
+    },
+    {
+      "week": "Week 3",
+      "title": "Weather App",
+      "tags": ["APIs", "UI", "UX"],
+      "description": "A weather app that forecasts the weather for a given city.",
+      "link": "/challenges/weather"
     }
   ]
 }
