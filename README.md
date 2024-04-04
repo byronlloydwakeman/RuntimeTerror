@@ -21,6 +21,7 @@ This weeks challenge can be found at - https://proud-moss-06f797a03.4.azurestati
 
 ### Week 2 - TicTacToe
 
+This week's project has been built using geeksforgeeks' game theory documentation as seen below. 
 https://www.geeksforgeeks.org/finding-optimal-move-in-tic-tac-toe-using-minimax-algorithm-in-game-theory/ <br/>
 https://www.geeksforgeeks.org/introduction-to-evaluation-function-of-minimax-algorithm-in-game-theory/ <br/>
 <br/>
