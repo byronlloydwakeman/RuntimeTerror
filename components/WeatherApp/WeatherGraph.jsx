@@ -98,7 +98,12 @@ export const WeatherGraph = (coords) => {
                 height={300}
               />
 
-              <GreenResponsiveButton text="Switch to Farenheit (°F)" />
+              <GreenResponsiveButton
+                text="Switch to Farenheit (°F)"
+                onClick={() => {
+                  setDisplayCelsius(false);
+                }}
+              />
             </div>
           ) : (
             <div>
@@ -122,7 +127,12 @@ export const WeatherGraph = (coords) => {
                 height={300}
               />
 
-              <GreenResponsiveButton text="Switch to Celsius (°C)" />
+              <GreenResponsiveButton
+                text="Switch to Celsius (°C)"
+                onClick={() => {
+                  setDisplayCelsius(true);
+                }}
+              />
             </div>
           )}
         </div>
