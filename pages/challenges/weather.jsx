@@ -6,14 +6,18 @@ import Navbar from '../../components/Navbars/Navbar';
 import NavbarBottom from '../../components/Navbars/NavbarBottom';
 import axios from 'axios';
 import { GoogleMap } from '../../components/WeatherApp/GoogleMap';
+import { LineChart } from '@mui/x-charts/LineChart';
+import { WeatherGraph } from '../../components/WeatherApp/WeatherGraph';
 
 export default function Weather() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [locationInput, setLocationInput] = useState('');
-  const [weatherData, setWeatherData] = useState({});
+  const [locationList, setLocationList] = useState([]);
+  const [listOpen, setListOpen] = useState(false);
+  const [weatherData, setWeatherData] = useState(null);
+  const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
-  const apiKey = 'f24fe0abae01bf3d756acc534d415427';
   useEffect(() => {
     if (navigator.share) {
       navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
@@ -29,32 +33,88 @@ export default function Weather() {
     console.log(error);
   };
 
+  // Current day and five-day forecast weather data
   useEffect(() => {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=metric`
       )
       .then((response) => {
         setWeatherData(response.data);
       });
-  }, [latitude, longitude, locationInput]);
-
-  console.log(weatherData);
+  }, [latitude, longitude, weatherApiKey]);
 
   const handleChange = (e) => {
     setLocationInput(e.target.value);
+    setListOpen(true);
   };
 
-  console.log(locationInput);
+  let countryCode = '';
+  let stateCode = '';
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${locationInput},${stateCode},${countryCode}&limit=5&appid=${weatherApiKey}`
+      )
+      .then((response) => {
+        setLocationList(response.data);
+      });
+  }, [locationInput, stateCode, countryCode]);
+
+  const handleListSelection = (e, location) => {
+    console.log(location);
+    setLocationInput(`${location.name}, ${location.country}`);
+    setLatitude(location.lat);
+    setLongitude(location.lon);
+    setListOpen(false);
+  };
+  console.log(weatherData);
 
   return (
     <div>
       <div className={styles.container}>
         <Navbar />
-        <form>
-          <input type="text" value={locationInput} onChange={handleChange} />
+        <form className={styles.input_form}>
+          <input
+            className={styles.form_text_field}
+            type="text"
+            value={locationInput}
+            onChange={handleChange}
+          />
+          {listOpen &&
+            locationList.map((location, index) => (
+              <div
+                className={styles.location_list_item}
+                key={index}
+                onClick={(e) => {
+                  handleListSelection(e, location);
+                }}
+              >
+                <p>
+                  {location.name}, {location.country}
+                </p>
+              </div>
+            ))}
         </form>
-        <h1>{weatherData?.main?.temp}</h1>
+        {weatherData && (
+          <div>
+            <p>Temp: {weatherData?.main?.temp}°C</p>
+            <p>Humidity: {weatherData?.main?.humidity}</p>
+            <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
+            <p>Precipitation: {weatherData?.wind?.speed}</p>
+            <p>Weather State: {weatherData?.weather[0]?.main}</p>
+            <p>Weather Description: {weatherData?.weather[0]?.description}</p>
+            <p>
+              Weather Icon:{' '}
+              <img
+                src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
+              />
+            </p>
+          </div>
+        )}
+        <WeatherGraph latitude={latitude} longitude={longitude} />
+
         <GoogleMap latitude={latitude} longitude={longitude} />
       </div>
       <NavbarBottom />

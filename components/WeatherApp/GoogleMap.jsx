@@ -25,15 +25,16 @@ export const GoogleMap = (coords) => {
 
       const mapOptions = {
         center: position,
-        zoom: 17,
+        zoom: 10,
         mapId: 'MY_NEXTJS_MAP_ID',
       };
 
       const map = new Map(mapRef.current, mapOptions);
+      console.log(coords);
     };
 
     initMap();
-  }, [coords.latitude, coords.longitude]);
+  }, [coords]);
 
   return <div style={{ height: '600px' }} ref={mapRef}></div>;
 };

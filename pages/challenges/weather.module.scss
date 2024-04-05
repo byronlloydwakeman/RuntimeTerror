@@ -6,4 +6,23 @@
   width: 100vw;
   margin: 0;
 
+
+  .input_form{
+
+    width: 500px;
+
+    .form_text_field {
+      width: 500px;
+    }
+
+
+    .location_list_item {
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .location_list_item:hover {
+      background-color: red;
+    }
+  }
 }
