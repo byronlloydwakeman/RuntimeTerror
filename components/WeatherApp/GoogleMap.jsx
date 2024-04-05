@@ -16,6 +16,9 @@ export const GoogleMap = (coords) => {
       });
 
       const { Map } = await loader.importLibrary('maps');
+      const { AdvancedMarkerElement } = await google.maps.importLibrary(
+        'marker'
+      );
       const position = {
         lat: coords.latitude,
         lng: coords.longitude,
@@ -30,7 +33,10 @@ export const GoogleMap = (coords) => {
       };
 
       const map = new Map(mapRef.current, mapOptions);
-      console.log(coords);
+      const marker = new AdvancedMarkerElement({
+        map,
+        position: { lat: coords.latitude, lng: coords.longitude },
+      });
     };
 
     initMap();

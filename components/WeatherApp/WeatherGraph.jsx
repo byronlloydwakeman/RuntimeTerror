@@ -9,10 +9,10 @@ export const WeatherGraph = (coords) => {
   const [weatherDataFuture, setWeatherDataFuture] = useState(null);
   const [weatherDataFutureFarenheit, setWeatherDataFutureFarenheit] =
     useState(null);
-  const [futureTemps, setFutureTemps] = useState([]);
-  const [futureTempsFarenheit, setFutureTempsFarenheit] = useState([]);
+  const [futureTemps, setFutureTemps] = useState(null);
+  const [futureTempsFarenheit, setFutureTempsFarenheit] = useState(null);
   const [dates, setDates] = useState([]);
-  const [displayCelsius, setDisplayCelsius] = useState(false);
+  const [displayCelsius, setDisplayCelsius] = useState(true);
   const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
   useEffect(() => {
@@ -46,12 +46,15 @@ export const WeatherGraph = (coords) => {
         if (mm < 10) mm = '0' + mm;
         const formattedDate = dd + '/' + mm;
         dates.push(forecastDate);
-        futureTemps.push(weatherDataFuture?.list[i]?.main?.temp);
-        futureTempsFarenheit.push(
-          weatherDataFutureFarenheit?.list[i]?.main?.temp
-        );
+        if (futureTemps.length < 5)
+          futureTemps.push(weatherDataFuture?.list[i]?.main?.temp);
+        if (futureTempsFarenheit.length < 5)
+          futureTempsFarenheit.push(
+            weatherDataFutureFarenheit?.list[i]?.main?.temp
+          );
       }
     }
+    console.log(displayCelsius);
   }, [weatherDataFuture, weatherDataFutureFarenheit]);
 
   const valueFormatter = (date) =>
@@ -59,7 +62,6 @@ export const WeatherGraph = (coords) => {
       month: '2-digit',
       day: '2-digit',
     });
-  // console.log(weatherData);
   console.log(dates);
   console.log(futureTemps);
   console.log(futureTempsFarenheit);
@@ -68,10 +70,6 @@ export const WeatherGraph = (coords) => {
     setFutureTemps([]);
     setFutureTempsFarenheit([]);
     setDates([]);
-  };
-
-  const switchUnits = () => {
-    setDisplayCelsius(!displayCelsius);
   };
 
   return (
@@ -100,10 +98,7 @@ export const WeatherGraph = (coords) => {
                 height={300}
               />
 
-              <GreenResponsiveButton
-                text="Switch to Farenheit (°F)"
-                onClick={switchUnits}
-              />
+              <GreenResponsiveButton text="Switch to Farenheit (°F)" />
             </div>
           ) : (
             <div>
@@ -127,10 +122,7 @@ export const WeatherGraph = (coords) => {
                 height={300}
               />
 
-              <GreenResponsiveButton
-                text="Switch to Celsius (°C)"
-                onClick={switchUnits}
-              />
+              <GreenResponsiveButton text="Switch to Celsius (°C)" />
             </div>
           )}
         </div>
