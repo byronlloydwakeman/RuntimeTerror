@@ -16,6 +16,7 @@ export default function Weather() {
   const [locationList, setLocationList] = useState([]);
   const [listOpen, setListOpen] = useState(false);
   const [weatherData, setWeatherData] = useState(null);
+  const [weatherCode, setWeatherCode] = useState(null);
   const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
   useEffect(() => {
@@ -41,6 +42,7 @@ export default function Weather() {
       )
       .then((response) => {
         setWeatherData(response.data);
+        setWeatherCode(response.data.weather[0].id);
       });
   }, [latitude, longitude, weatherApiKey]);
 
@@ -69,7 +71,6 @@ export default function Weather() {
     setLongitude(location.lon);
     setListOpen(false);
   };
-  console.log(weatherData);
 
   return (
     <div>

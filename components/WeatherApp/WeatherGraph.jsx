@@ -54,7 +54,6 @@ export const WeatherGraph = (coords) => {
           );
       }
     }
-    console.log(displayCelsius);
   }, [weatherDataFuture, weatherDataFutureFarenheit]);
 
   const valueFormatter = (date) =>
@@ -62,9 +61,6 @@ export const WeatherGraph = (coords) => {
       month: '2-digit',
       day: '2-digit',
     });
-  console.log(dates);
-  console.log(futureTemps);
-  console.log(futureTempsFarenheit);
 
   const resetValues = () => {
     setFutureTemps([]);
@@ -88,7 +84,7 @@ export const WeatherGraph = (coords) => {
                     position: 'top',
                   },
                 ]}
-                yAxis={[{ label: 'Temperature' }]}
+                yAxis={[{ label: 'Temperature (°C)' }]}
                 series={[
                   {
                     data: futureTemps,
@@ -117,7 +113,7 @@ export const WeatherGraph = (coords) => {
                     position: 'top',
                   },
                 ]}
-                yAxis={[{ label: 'Temperature' }]}
+                yAxis={[{ label: 'Temperature (°F)' }]}
                 series={[
                   {
                     data: futureTempsFarenheit,
