@@ -72,6 +72,11 @@ export default function Weather() {
     setListOpen(false);
   };
 
+  const extremeWeatherCodes = [
+    200, 201, 202, 210, 211, 212, 221, 230, 231, 232, 312, 314, 504, 522, 602,
+    622, 781, 771, 762,
+  ];
+
   return (
     <div>
       <div className={styles.container}>
@@ -100,6 +105,9 @@ export default function Weather() {
         </form>
         {weatherData && (
           <div>
+            {extremeWeatherCodes.includes(weatherCode) && (
+              <div>Extreme weather alert!</div>
+            )}
             <p>Temp: {weatherData?.main?.temp}°C</p>
             <p>Humidity: {weatherData?.main?.humidity}</p>
             <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
