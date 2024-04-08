@@ -33,6 +33,7 @@ export const GoogleMap = (coords) => {
       };
 
       const map = new Map(mapRef.current, mapOptions);
+
       const marker = new AdvancedMarkerElement({
         map,
         position: { lat: coords.latitude, lng: coords.longitude },
@@ -41,6 +42,8 @@ export const GoogleMap = (coords) => {
 
     initMap();
   }, [coords]);
+
+  console.log(coords.temp);
 
   return <div style={{ height: '600px' }} ref={mapRef}></div>;
 };

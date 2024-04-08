@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import axios from 'axios';
-import GreenResponsiveButton from '../UiElements/GreenResponsiveButton';
 
 export const WeatherGraph = (coords) => {
   const [weatherDataFuture, setWeatherDataFuture] = useState(null);
@@ -36,25 +35,22 @@ export const WeatherGraph = (coords) => {
   }, [weatherApiKey, coords]);
 
   useEffect(() => {
-    for (let i = 0; i < weatherDataFuture?.list.length; i++) {
-      if (i % 8 == 0) {
-        let unixTimestamp = weatherDataFuture?.list[i].dt;
-        let forecastDate = new Date(unixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
-        let mm = forecastDate.getMonth() + 1;
-        let dd = forecastDate.getDate();
-        if (dd < 10) dd = '0' + dd;
-        if (mm < 10) mm = '0' + mm;
-        const formattedDate = dd + '/' + mm;
-        dates.push(forecastDate);
-        if (futureTemps.length < 5)
-          futureTemps.push(weatherDataFuture?.list[i]?.main?.temp);
-        if (futureTempsFarenheit.length < 5)
-          futureTempsFarenheit.push(
-            weatherDataFutureFarenheit?.list[i]?.main?.temp
-          );
+    if (weatherDataFuture && weatherDataFutureFarenheit) {
+      for (let i = 0; i < weatherDataFuture?.list.length; i++) {
+        if (i % 8 == 0) {
+          let unixTimestamp = weatherDataFuture?.list[i].dt;
+          let forecastDate = new Date(unixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
+          dates.push(forecastDate);
+          if (futureTemps.length < 5)
+            futureTemps.push(weatherDataFuture?.list[i]?.main?.temp);
+          if (futureTempsFarenheit.length < 5)
+            futureTempsFarenheit.push(
+              weatherDataFutureFarenheit?.list[i]?.main?.temp
+            );
+        }
       }
     }
-  }, [weatherDataFuture, weatherDataFutureFarenheit]);
+  }, [weatherDataFuture, weatherDataFutureFarenheit, displayCelsius]);
 
   const valueFormatter = (date) =>
     date.toLocaleDateString('fr-FR', {
@@ -94,12 +90,13 @@ export const WeatherGraph = (coords) => {
                 height={300}
               />
 
-              <GreenResponsiveButton
-                text="Switch to Farenheit (°F)"
+              <button
                 onClick={() => {
                   setDisplayCelsius(false);
                 }}
-              />
+              >
+                Switch to Farenheit (°F)
+              </button>
             </div>
           ) : (
             <div>
@@ -123,12 +120,13 @@ export const WeatherGraph = (coords) => {
                 height={300}
               />
 
-              <GreenResponsiveButton
-                text="Switch to Celsius (°C)"
+              <button
                 onClick={() => {
                   setDisplayCelsius(true);
                 }}
-              />
+              >
+                Switch to Celsius (°C)
+              </button>
             </div>
           )}
         </div>

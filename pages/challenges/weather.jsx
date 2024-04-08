@@ -6,7 +6,6 @@ import Navbar from '../../components/Navbars/Navbar';
 import NavbarBottom from '../../components/Navbars/NavbarBottom';
 import axios from 'axios';
 import { GoogleMap } from '../../components/WeatherApp/GoogleMap';
-import { LineChart } from '@mui/x-charts/LineChart';
 import { WeatherGraph } from '../../components/WeatherApp/WeatherGraph';
 
 export default function Weather() {
@@ -34,7 +33,7 @@ export default function Weather() {
     console.log(error);
   };
 
-  // Current day and five-day forecast weather data
+  // Current day weather data
   useEffect(() => {
     axios
       .get(
@@ -65,13 +64,13 @@ export default function Weather() {
   }, [locationInput, stateCode, countryCode]);
 
   const handleListSelection = (e, location) => {
-    console.log(location);
     setLocationInput(`${location.name}, ${location.country}`);
     setLatitude(location.lat);
     setLongitude(location.lon);
     setListOpen(false);
   };
 
+  // codes given by api for extreme weather events
   const extremeWeatherCodes = [
     200, 201, 202, 210, 211, 212, 221, 230, 231, 232, 312, 314, 504, 522, 602,
     622, 781, 771, 762,
@@ -108,7 +107,7 @@ export default function Weather() {
             {extremeWeatherCodes.includes(weatherCode) && (
               <div>Extreme weather alert!</div>
             )}
-            <p>Temp: {weatherData?.main?.temp}°C</p>
+            <p>Temp: {weatherData?.main?.temp.toFixed(0)}°C</p>
             <p>Humidity: {weatherData?.main?.humidity}</p>
             <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
             <p>Precipitation: {weatherData?.wind?.speed}</p>
@@ -124,7 +123,11 @@ export default function Weather() {
         )}
         <WeatherGraph latitude={latitude} longitude={longitude} />
 
-        <GoogleMap latitude={latitude} longitude={longitude} />
+        <GoogleMap
+          latitude={latitude}
+          longitude={longitude}
+          temp={`${weatherData?.main?.temp.toFixed(0)}°C`}
+        />
       </div>
       <NavbarBottom />
     </div>
