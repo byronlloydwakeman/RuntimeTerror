@@ -1,0 +1,29 @@
+@import '../../styles/style.scss';
+
+.custom_text_input__boxSlideInComplete{
+    background-position: -100% 0%;
+}
+
+.custom_text_input__container {
+    display: flex;
+    flex-direction: column;
+
+    background-size: 1000px 42px;
+    background-image: linear-gradient(90deg, $input-background 50%, $widget-background 50%);
+
+    height: 44px;
+    width: 500px;
+
+    transition: background-position linear 0.5s;
+
+    .custom_text_input {
+        background-color: $input-background;
+        color: whitesmoke;
+        border: 0;
+        padding: 12px;
+        outline: none;
+        vertical-align: text-top;
+        font-family: "Reddit Mono", monospace;
+        transition: border-bottom linear 1s;
+    }
+}
