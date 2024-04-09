@@ -3,15 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { SweepButton } from './SweepButton';
-import styles from "./weathergraph.module.scss";
+import styles from "./weathergraph.module.scss"
 import axios from 'axios';
 
-export const WeatherGraph = (coords) => {
+export const WeatherGraph = ({latitude, longitude, futureTemps, setFutureTemps, futureTempsFarenheit, setFutureTempsFarenheit}) => {
   const [weatherDataFuture, setWeatherDataFuture] = useState(null);
-  const [weatherDataFutureFarenheit, setWeatherDataFutureFarenheit] =
-    useState(null);
-  const [futureTemps, setFutureTemps] = useState(null);
-  const [futureTempsFarenheit, setFutureTempsFarenheit] = useState(null);
+  const [weatherDataFutureFarenheit, setWeatherDataFutureFarenheit] = useState(null);
   const [dates, setDates] = useState([]);
   const [displayCelsius, setDisplayCelsius] = useState(true);
   const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
@@ -19,7 +16,7 @@ export const WeatherGraph = (coords) => {
   useEffect(() => {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${coords.latitude}&lon=${coords.longitude}&appid=${weatherApiKey}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=metric`
       )
       .then((response) => {
         setWeatherDataFuture(response.data);
@@ -27,14 +24,14 @@ export const WeatherGraph = (coords) => {
 
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${coords.latitude}&lon=${coords.longitude}&appid=${weatherApiKey}&units=imperial`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=imperial`
       )
       .then((response) => {
         setWeatherDataFutureFarenheit(response.data);
       });
 
     resetValues();
-  }, [weatherApiKey, coords]);
+  }, [weatherApiKey, latitude, longitude]);
 
   useEffect(() => {
     if (weatherDataFuture && weatherDataFutureFarenheit) {
@@ -71,7 +68,7 @@ export const WeatherGraph = (coords) => {
       {futureTemps && futureTempsFarenheit ? (
         <div className={styles.weather_graph__container}> 
           {displayCelsius ? (
-            <>
+            <div>
               <LineChart
               sx={{
                 //change left yAxis label styles
@@ -117,12 +114,10 @@ export const WeatherGraph = (coords) => {
                 width={500}
                 height={300}
               />
-              <div className={styles.convert_button__container}>
-                <SweepButton Content={"Switch to Farenheit (°F)"} Function={() => {setDisplayCelsius(false);}}/>
-              </div>
-            </>
+              <SweepButton Content={"Switch to Farenheit (°F)"} Function={() => {setDisplayCelsius(false);}}/>
+            </div>
           ) : (
-            <div className={styles.weather_graph__container}>
+            <div>
               <LineChart
                 sx={{
                   //change left yAxis label styles
@@ -168,9 +163,7 @@ export const WeatherGraph = (coords) => {
                 width={500}
                 height={300}
               />
-              <div className={styles.convert_button__container}>
-                <SweepButton Content={"Switch to Celsius (°C)"} Function={() => {setDisplayCelsius(true)}}/>
-              </div>
+              <SweepButton Content={"Switch to Celsius (°C)"} Function={() => {setDisplayCelsius(true)}}/>
             </div>
           )}
         </div>
