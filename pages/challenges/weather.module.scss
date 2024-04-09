@@ -1,26 +1,77 @@
 @import '../../styles/style.scss';
 
 .container {
-  background-color: $soft-grey;
-  height: 94.75vh;
+  background-image: url("../../public/gifs/rain.gif");
+  background-size: cover;
+  background-position: center;
+
   width: 100vw;
   margin: 0;
+  font-family: 'Raleway', sans-serif;
+  color: whitesmoke;
 
-  .input_form{
-    width: 500px;
+  .input_form_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    .form_text_field {
+    .input_form{
       width: 500px;
-    }
+      margin: 20px 0 10px 0;
+  
+      .location_list_item {
+        background-color: $input-background;
+        cursor: pointer;
+      }
+  
+      .location_list_item:hover {
+        background-color: invert($input-background);
+      }
 
-
-    .location_list_item {
-      background-color: white;
-      cursor: pointer;
-    }
-
-    .location_list_item:hover {
-      background-color: red;
+      .list_item {
+        font-family: "Reddit Mono", monospace;
+        padding: 5px 10px;
+        font-size: 14px;
+      }
     }
   }
+
+  .header_container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header_title{
+    margin: 40px 0 10px 0;
+    font-size: 24px;
+    text-shadow: 0 0 20px $text-shadow;
+  }
+
+  .header_temperature{
+    font-size: 60px;
+    font-weight: 200;
+    font-family: "Reddit Mono", monospace;
+    letter-spacing: -5px;
+    text-shadow: 0 0 20px $text-shadow;
+  }
+
+  .widgets_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    margin: 40px 0;
+  }
+
+  .widget_item{
+    display: flex;
+    min-width: 100%;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(0, 106, 199);
+  }
+
 }

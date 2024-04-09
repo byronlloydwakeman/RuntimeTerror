@@ -1,0 +1,9 @@
+.weather_graph__container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .convert_button__container{
+        margin: 10px;
+    }
+}
