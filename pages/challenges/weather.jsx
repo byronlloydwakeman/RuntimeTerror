@@ -7,8 +7,13 @@ import NavbarBottom from '../../components/Navbars/NavbarBottom';
 import axios from 'axios';
 import { GoogleMap } from '../../components/WeatherApp/GoogleMap';
 import { WeatherGraph } from '../../components/WeatherApp/WeatherGraph';
+import { WeatherWidget } from '../../components/WeatherApp/WeatherWidget';
+import { style } from '@mui/system';
+import { CustomTextInput } from '../../components/WeatherApp/CustomTextInput';
+import { motion, useAnimation } from 'framer-motion';
 
 export default function Weather() {
+  const [locationName, setLocationName] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [locationInput, setLocationInput] = useState('');
@@ -17,6 +22,8 @@ export default function Weather() {
   const [weatherData, setWeatherData] = useState(null);
   const [weatherCode, setWeatherCode] = useState(null);
   const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+
+  const dragControls = useAnimation();
 
   useEffect(() => {
     if (navigator.share) {
@@ -42,6 +49,7 @@ export default function Weather() {
       .then((response) => {
         setWeatherData(response.data);
         setWeatherCode(response.data.weather[0].id);
+        setLocationName(response.data.name);
       });
   }, [latitude, longitude, weatherApiKey]);
 
@@ -80,48 +88,73 @@ export default function Weather() {
     <div>
       <div className={styles.container}>
         <Navbar />
-        <form className={styles.input_form}>
-          <input
-            className={styles.form_text_field}
-            type="text"
-            value={locationInput}
-            onChange={handleChange}
-          />
-          {listOpen &&
-            locationList.map((location, index) => (
-              <div
-                className={styles.location_list_item}
-                key={index}
-                onClick={(e) => {
-                  handleListSelection(e, location);
-                }}
-              >
+        <div className={styles.header_container}>
+
+          <h1 className={styles.header_title}>{locationName}</h1>
+          <h2 className={styles.header_temperature}>{weatherData?.main?.temp.toFixed(0)}°</h2>
+          <p>{weatherData?.weather[0]?.description}</p>
+        </div>
+        <div className={styles.input_form_container}>
+          <form className={styles.input_form}>
+              <CustomTextInput value={locationInput} onChange={handleChange}/>
+              {listOpen &&
+                locationList.map((location, index) => (
+                  <div
+                    className={styles.location_list_item}
+                    key={index}
+                    onClick={(e) => {
+                      handleListSelection(e, location);
+                    }}
+                  >
+                    <p className={styles.list_item}>
+                      {location.name}, {location.country}
+                    </p>
+                  </div>
+                ))}
+          </form>
+        </div>
+    
+        <motion.div
+            style={{ display: 'flex', justifyContent: "center" }}
+            drag
+            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+            dragElastic={0.5}
+            dragControls={dragControls}
+          >
+          <div className={styles.widgets_container}>
+            <WeatherWidget elements={[<div className={styles.widget_item}>
+                  <h1>Today</h1>
+                  <h1>13C</h1>
+              </div>, <div className={styles.widget_item}>
+                  <h1>Today</h1>
+                  <h1>13C</h1>
+              </div>, <div className={styles.widget_item}>
+                  <h1>Today</h1>
+                  <h1>13C</h1>
+              </div>]}
+            />
+
+            <WeatherWidget elements={[<WeatherGraph latitude={latitude} longitude={longitude} />]} />
+
+            <WeatherWidget elements={[<div className={styles.widget_item}>
+                <p>Humidity: {weatherData?.main?.humidity}</p>
+              </div>, <div className={styles.widget_item}>
+                <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
+              </div>, <div className={styles.widget_item}>
+                <p>Precipitation: {weatherData?.wind?.speed}</p>
+              </div>, <>
+              <p>Weather State: {weatherData?.weather[0]?.main}</p>
                 <p>
-                  {location.name}, {location.country}
+                    Weather Icon:{' '}
+                    <img
+                      src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
+                    />
                 </p>
-              </div>
-            ))}
-        </form>
-        {weatherData && (
-          <div>
-            {extremeWeatherCodes.includes(weatherCode) && (
-              <div>Extreme weather alert!</div>
-            )}
-            <p>Temp: {weatherData?.main?.temp.toFixed(0)}°C</p>
-            <p>Humidity: {weatherData?.main?.humidity}</p>
-            <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
-            <p>Precipitation: {weatherData?.wind?.speed}</p>
-            <p>Weather State: {weatherData?.weather[0]?.main}</p>
-            <p>Weather Description: {weatherData?.weather[0]?.description}</p>
-            <p>
-              Weather Icon:{' '}
-              <img
-                src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
-              />
-            </p>
+              </>]}
+            />
           </div>
-        )}
-        <WeatherGraph latitude={latitude} longitude={longitude} />
+        </motion.div>
+          
 
         <GoogleMap
           latitude={latitude}
