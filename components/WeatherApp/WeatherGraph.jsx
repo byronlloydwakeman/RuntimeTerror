@@ -39,8 +39,7 @@ export const WeatherGraph = (coords) => {
       for (let i = 0; i < weatherDataFuture?.list.length; i++) {
         if (i % 8 == 0) {
           let unixTimestamp = weatherDataFuture?.list[i].dt;
-          let forecastDate = new Date(unixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
-          dates.push(forecastDate);
+          addForecastData(unixTimestamp);
           if (futureTemps.length < 5)
             futureTemps.push(weatherDataFuture?.list[i]?.main?.temp);
           if (futureTempsFarenheit.length < 5)
@@ -62,6 +61,11 @@ export const WeatherGraph = (coords) => {
     setFutureTemps([]);
     setFutureTempsFarenheit([]);
     setDates([]);
+  };
+
+  const addForecastData = (unixTimestamp) => {
+    let forecastDate = new Date(unixTimestamp * 1000); // convert timestamp to milliseconds and construct Date object
+    dates.push(forecastDate);
   };
 
   return (
