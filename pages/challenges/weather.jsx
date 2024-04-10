@@ -115,13 +115,19 @@ export default function Weather() {
     const currentWeather = weatherData?.weather[0]?.main;
 
     // Define the new background image URL
-    const newBackgroundImageUrl = weatherImagePairs.find(
+    var newBackgroundImageUrl = weatherImagePairs.find(
       (pair) => pair.name === currentWeather
     )?.image;
 
-    console.log(newBackgroundImageUrl);
+    if(newBackgroundImageUrl)
+    {
+      divElement.style.backgroundImage = `url("${newBackgroundImageUrl}")`;
+    }
+    else {
+      divElement.style.backgroundImage = `url("https://wallpapercave.com/wp/wp6990351.jpg")`;
+    }
 
-    divElement.style.backgroundImage = `url("${newBackgroundImageUrl}")`;
+
   }, [weatherData]);
 
   const handleListSelection = (e, location) => {
