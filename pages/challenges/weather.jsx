@@ -65,7 +65,7 @@ export default function Weather() {
   useEffect(() => {
     axios
       .get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${locationInput},${stateCode},${countryCode}&limit=5&appid=${weatherApiKey}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${locationInput},${stateCode},${countryCode}&limit=5&appid=${weatherApiKey}`
       )
       .then((response) => {
         setLocationList(response.data);
@@ -173,18 +173,6 @@ export default function Weather() {
         </div>
 
         <div className={styles.widgets_container}>
-          {/* <WeatherWidget elements={[<div className={styles.widget_item}>
-                  <h1>Today</h1>
-                  <h1>13C</h1>
-              </div>, <div className={styles.widget_item}>
-                  <h1>Today</h1>
-                  <h1>13C</h1>
-              </div>, <div className={styles.widget_item}>
-                  <h1>Today</h1>
-                  <h1>13C</h1>
-              </div>]}
-            /> */}
-
           <WeatherWidget
             elements={[
               <WeatherGraph latitude={latitude} longitude={longitude} />,
