@@ -194,11 +194,20 @@ export default function Weather() {
               ]}
             />
 
+            {weatherData && (
+              <div>
+                {extremeWeatherCodes.includes(weatherCode) && (
+                  <div className={styles.extreme_weather}>
+                    Extreme weather alert!!
+                  </div>
+                )}
+              </div>
+            )}
             <WeatherWidget
               elements={[
                 <div className={styles.widget_item}>
                   <span className={styles.weather_state}>
-                    Weather State: {weatherData?.weather[0]?.main}{' '}
+                    {weatherData?.weather[0]?.main}{' '}
                     <img
                       src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
                     />
@@ -206,13 +215,13 @@ export default function Weather() {
                 </div>,
 
                 <div className={styles.widget_item}>
-                  <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
+                  <p>Wind speed: {weatherData?.wind?.speed} km/h</p>
                 </div>,
                 <div className={styles.widget_item}>
-                  <p>Precipitation: {weatherData?.wind?.speed}</p>
+                  <p>Precipitation: {weatherData?.wind?.speed.toFixed(1)} mm</p>
                 </div>,
                 <div className={styles.widget_item}>
-                  <p>Humidity: {weatherData?.main?.humidity}</p>
+                  <p>Humidity: {weatherData?.main?.humidity}%</p>
                 </div>,
                 ,
               ]}
