@@ -1,7 +1,6 @@
 @import '../../styles/style.scss';
 
 .navbar_container {
-  padding-bottom: 50px;
   background-color: $soft-grey;
 
   @include mobile {

@@ -10,6 +10,18 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=PT+Sans:300,400,700,800"
             rel="stylesheet"
           />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+          />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Reddit+Mono:wght@200..900&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

@@ -1,6 +1,10 @@
 $forest-green: #045149;
 $soft-grey: #e6eaef;
 $error-message: #ff6961;
+$sky-blue: #00bce1;
+$text-shadow: #6d6d6d;
+$input-background: #2b2b2b;
+$widget-background: #006899;
 
 @mixin mobile {
     @media (max-width: 800px) {

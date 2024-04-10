@@ -1,0 +1,94 @@
+@import '../../styles/style.scss';
+
+.container {
+  background-size: cover;
+  background-position: center;
+  background-color: grey;
+
+  width: 100vw;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  color: whitesmoke;
+  padding-bottom: 30px;
+
+  .input_form_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .input_form{
+      width: 500px;
+      margin: 20px 0 10px 0;
+  
+      .location_list_item {
+        background-color: $input-background;
+        cursor: pointer;
+      }
+  
+      .location_list_item:hover {
+        background-color: invert($input-background);
+      }
+
+      .list_item {
+        font-family: "Reddit Mono", monospace;
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .header_container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header_title{
+    margin: 40px 0 0px 0;
+    font-size: 24px;
+    text-shadow: 0 0 20px $text-shadow;
+  }
+
+  .header_temperature{
+    font-size: 60px;
+    font-weight: 200;
+    font-family: "Reddit Mono", monospace;
+    letter-spacing: -5px;
+    text-shadow: 0 0 20px $text-shadow;
+  }
+
+  .header_description{
+    font-size: 20px;
+  }
+
+  .widgets_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    margin: 40px 0;
+
+    .weather_state{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .extreme_weather{
+      font-weight: bold;
+      font-size: 24px;
+    }
+  }
+
+  .widget_item{
+    display: flex;
+    min-width: 100%;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(0, 106, 199);
+  }
+
+}
