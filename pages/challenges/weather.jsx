@@ -5,14 +5,14 @@ import styles from './weather.module.scss';
 import Navbar from '../../components/Navbars/Navbar';
 import NavbarBottom from '../../components/Navbars/NavbarBottom';
 import axios from 'axios';
+
 import { GoogleMap } from '../../components/WeatherApp/GoogleMap';
 import { WeatherGraph } from '../../components/WeatherApp/WeatherGraph';
 import { WeatherWidget } from '../../components/WeatherApp/WeatherWidget';
-import { style } from '@mui/system';
-import { CustomTextInput } from '../../components/WeatherApp/CustomTextInput';
 import { motion, useAnimation } from 'framer-motion';
 import { WeatherDaysWidget } from '../../components/WeatherApp/WeatherDaysWidget';
 import { WeatherHeader } from '../../components/WeatherApp/WeatherHeader';
+import { getLocationList } from '../../components/WeatherApp/API/getLocationList.ts';
 
 
 export default function Weather() {
@@ -58,13 +58,7 @@ export default function Weather() {
 
   // Gets a list of places for user upon input
   useEffect(() => {
-    axios
-      .get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${locationInput},${stateCode},${countryCode}&limit=5&appid=${weatherApiKey}`
-      )
-      .then((response) => {
-        setLocationList(response.data);
-      });
+    setLocationList(getLocationList());
   }, [locationInput, stateCode, countryCode]);
 
   // Current day weather data

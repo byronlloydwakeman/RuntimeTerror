@@ -1,12 +1,6 @@
 import axios from 'axios';
 
-interface LocationParams {
-  locationInput: string;
-  stateCode: string;
-  countryCode: string;
-}
-
-function getLocationList({ locationInput, stateCode, countryCode }: LocationParams): void {
+export function getLocationList(locationInput, stateCode, countryCode): void {
   const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
   axios

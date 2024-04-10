@@ -17,6 +17,8 @@ export const WeatherHeader = ({weatherData, listOpen, locationInput, locationLis
         setListOpen(false);
       };
 
+    console.log(locationInput);
+
     return (
         <>
             <div className={styles.header_container}>
@@ -28,7 +30,7 @@ export const WeatherHeader = ({weatherData, listOpen, locationInput, locationLis
                 <form className={styles.input_form}>
                     <CustomTextInput value={locationInput} onChange={handleChange}/>
                     {listOpen &&
-                    locationList.map((location, index) => (
+                    locationList?.map((location, index) => (
                         <div
                         className={styles.location_list_item}
                         key={index}
