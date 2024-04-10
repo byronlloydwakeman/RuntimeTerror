@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -13,7 +14,7 @@ import { CustomTextInput } from '../../components/WeatherApp/CustomTextInput';
 import { motion, useAnimation } from 'framer-motion';
 
 export default function Weather() {
-  const [locationName, setLocationName] = useState("");
+  const [locationName, setLocationName] = useState('');
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [locationInput, setLocationInput] = useState('');
@@ -75,38 +76,53 @@ export default function Weather() {
     // Find the div element by its ID or class
     const divElement = document.getElementById('weather-container'); // Replace 'yourDivId' with the actual ID of your div
 
-    const weatherImagePairs = [{
-      "name": "Thunderstorm",
-      "image": "https://zenitube.com/img/posts/2016/storm-gif/storm-gif10.gif"
-    }, {
-      "name": "Drizzle",
-      "image": "https://i.pinimg.com/originals/e6/18/95/e618957b8c16e662392bd086a2d94f3c.gif"
-    },{
-      "name": "Rain",
-      "image": "https://i.pinimg.com/originals/e6/18/95/e618957b8c16e662392bd086a2d94f3c.gif"
-    },{
-      "name": "Snow",
-      "image": "https://th.bing.com/th/id/R.06c2dbb8ba84eb51b87ac04d25e09288?rik=UzCRPhm3Z4V9lA&pid=ImgRaw&r=0"
-    },{
-      "name": "Atmosphere",
-      "image": "https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif"
-    },{
-      "name": "Clear",
-      "image": "https://static.vecteezy.com/system/resources/previews/003/692/649/large_2x/beautiful-clear-blue-sky-in-summer-look-lke-heaven-free-photo.jpg"
-    },{
-      "name": "Clouds",
-      "image": "https://i.giphy.com/media/gINumlT106MrivPf0j/giphy.gif"
-    },]
+    const weatherImagePairs = [
+      {
+        name: 'Thunderstorm',
+        image: 'https://zenitube.com/img/posts/2016/storm-gif/storm-gif10.gif',
+      },
+      {
+        name: 'Drizzle',
+        image:
+          'https://i.pinimg.com/originals/e6/18/95/e618957b8c16e662392bd086a2d94f3c.gif',
+      },
+      {
+        name: 'Rain',
+        image:
+          'https://i.pinimg.com/originals/e6/18/95/e618957b8c16e662392bd086a2d94f3c.gif',
+      },
+      {
+        name: 'Snow',
+        image:
+          'https://th.bing.com/th/id/R.06c2dbb8ba84eb51b87ac04d25e09288?rik=UzCRPhm3Z4V9lA&pid=ImgRaw&r=0',
+      },
+      {
+        name: 'Atmosphere',
+        image:
+          'https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif',
+      },
+      {
+        name: 'Clear',
+        image:
+          'https://static.vecteezy.com/system/resources/previews/003/692/649/large_2x/beautiful-clear-blue-sky-in-summer-look-lke-heaven-free-photo.jpg',
+      },
+      {
+        name: 'Clouds',
+        image: 'https://i.giphy.com/media/gINumlT106MrivPf0j/giphy.gif',
+      },
+    ];
 
     const currentWeather = weatherData?.weather[0]?.main;
 
     // Define the new background image URL
-    const newBackgroundImageUrl = weatherImagePairs.find(pair => pair.name === currentWeather)?.image;
-    
+    const newBackgroundImageUrl = weatherImagePairs.find(
+      (pair) => pair.name === currentWeather
+    )?.image;
+
     console.log(newBackgroundImageUrl);
 
     divElement.style.backgroundImage = `url("${newBackgroundImageUrl}")`;
-  }, [weatherData])
+  }, [weatherData]);
 
   const handleListSelection = (e, location) => {
     setLocationInput(`${location.name}, ${location.country}`);
@@ -126,38 +142,39 @@ export default function Weather() {
       <div id="weather-container" className={styles.container}>
         <Navbar />
         <div className={styles.header_container}>
-
           <h1 className={styles.header_title}>{locationName}</h1>
-          <h2 className={styles.header_temperature}>{weatherData?.main?.temp.toFixed(0)}°</h2>
+          <h2 className={styles.header_temperature}>
+            {weatherData?.main?.temp.toFixed(0)}°
+          </h2>
           <p>{weatherData?.weather[0]?.description}</p>
         </div>
         <div className={styles.input_form_container}>
           <form className={styles.input_form}>
-              <CustomTextInput value={locationInput} onChange={handleChange}/>
-              {listOpen &&
-                locationList.map((location, index) => (
-                  <div
-                    className={styles.location_list_item}
-                    key={index}
-                    onClick={(e) => {
-                      handleListSelection(e, location);
-                    }}
-                  >
-                    <p className={styles.list_item}>
-                      {location.name}, {location.country}
-                    </p>
-                  </div>
-                ))}
+            <CustomTextInput value={locationInput} onChange={handleChange} />
+            {listOpen &&
+              locationList.map((location, index) => (
+                <div
+                  className={styles.location_list_item}
+                  key={index}
+                  onClick={(e) => {
+                    handleListSelection(e, location);
+                  }}
+                >
+                  <p className={styles.list_item}>
+                    {location.name}, {location.country}
+                  </p>
+                </div>
+              ))}
           </form>
         </div>
-    
+
         <motion.div
-            style={{ display: 'flex', justifyContent: "center" }}
-            drag
-            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-            dragElastic={0.5}
-            dragControls={dragControls}
-          >
+          style={{ display: 'flex', justifyContent: 'center' }}
+          drag
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+          dragElastic={0.5}
+          dragControls={dragControls}
+        >
           <div className={styles.widgets_container}>
             {/* <WeatherWidget elements={[<div className={styles.widget_item}>
                   <h1>Today</h1>
@@ -171,27 +188,36 @@ export default function Weather() {
               </div>]}
             /> */}
 
-            <WeatherWidget elements={[<WeatherGraph latitude={latitude} longitude={longitude} />]} />
+            <WeatherWidget
+              elements={[
+                <WeatherGraph latitude={latitude} longitude={longitude} />,
+              ]}
+            />
 
-            <WeatherWidget elements={[<div className={styles.widget_item}>
-                <p>Humidity: {weatherData?.main?.humidity}</p>
-              </div>, <div className={styles.widget_item}>
-                <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
-              </div>, <div className={styles.widget_item}>
-                <p>Precipitation: {weatherData?.wind?.speed}</p>
-              </div>, <>
-              <p>Weather State: {weatherData?.weather[0]?.main}</p>
-                <p>
+            <WeatherWidget
+              elements={[
+                <div className={styles.widget_item}>
+                  <p>Humidity: {weatherData?.main?.humidity}</p>
+                </div>,
+                <div className={styles.widget_item}>
+                  <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
+                </div>,
+                <div className={styles.widget_item}>
+                  <p>Precipitation: {weatherData?.wind?.speed}</p>
+                </div>,
+                <>
+                  <p>Weather State: {weatherData?.weather[0]?.main}</p>
+                  <p>
                     Weather Icon:{' '}
                     <img
                       src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
                     />
-                </p>
-              </>]}
+                  </p>
+                </>,
+              ]}
             />
           </div>
         </motion.div>
-          
 
         <GoogleMap
           latitude={latitude}
