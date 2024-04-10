@@ -95,7 +95,7 @@ export default function Weather() {
       "image": "https://static.vecteezy.com/system/resources/previews/003/692/649/large_2x/beautiful-clear-blue-sky-in-summer-look-lke-heaven-free-photo.jpg"
     },{
       "name": "Clouds",
-      "image": "https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif"
+      "image": "https://i.giphy.com/media/gINumlT106MrivPf0j/giphy.gif"
     },]
 
     const currentWeather = weatherData?.weather[0]?.main;
