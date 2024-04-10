@@ -119,15 +119,11 @@ export default function Weather() {
       (pair) => pair.name === currentWeather
     )?.image;
 
-    if(newBackgroundImageUrl)
-    {
+    if (newBackgroundImageUrl) {
       divElement.style.backgroundImage = `url("${newBackgroundImageUrl}")`;
-    }
-    else {
+    } else {
       divElement.style.backgroundImage = `url("https://wallpapercave.com/wp/wp6990351.jpg")`;
     }
-
-
   }, [weatherData]);
 
   const handleListSelection = (e, location) => {
