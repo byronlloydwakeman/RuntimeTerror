@@ -11,25 +11,8 @@ import { WeatherWidget } from '../../components/WeatherApp/WeatherWidget';
 import { style } from '@mui/system';
 import { CustomTextInput } from '../../components/WeatherApp/CustomTextInput';
 import { motion, useAnimation } from 'framer-motion';
-
-const getFutureDays = () => {
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const today = new Date();
-  const currentDay = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
-
-  // Array to store the next 5 days
-  const futureDays = [];
-
-  // Loop to get the next 5 days
-  for (let i = 0; i < 5; i++) {
-    // Calculate the index of the next day in the daysOfWeek array
-    const nextDayIndex = (currentDay + i) % 7;
-    // Push the name of the next day to the futureDays array
-    futureDays.push(daysOfWeek[nextDayIndex]);
-  }
-
-  return futureDays;
-};
+import { WeatherDaysWidget } from '../../components/WeatherApp/WeatherDaysWidget';
+import { WeatherHeader } from '../../components/WeatherApp/WeatherHeader';
 
 
 export default function Weather() {
@@ -43,17 +26,15 @@ export default function Weather() {
   const [weatherCode, setWeatherCode] = useState(null);
 
   // Future Weather
+
   const [futureTemps, setFutureTemps] = useState(null);
   const [futureTempsFarenheit, setFutureTempsFarenheit] = useState(null);
 
-  useEffect(() => {
-    console.log(futureTemps);
-  }, [futureTemps])
-
-  const futureDays = getFutureDays();
   const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
   const dragControls = useAnimation();
+
+  // Get users current location
 
   useEffect(() => {
     if (navigator.share) {
@@ -70,6 +51,22 @@ export default function Weather() {
     console.log(error);
   };
 
+  // API Calls
+
+  let countryCode = '';
+  let stateCode = '';
+
+  // Gets a list of places for user upon input
+  useEffect(() => {
+    axios
+      .get(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${locationInput},${stateCode},${countryCode}&limit=5&appid=${weatherApiKey}`
+      )
+      .then((response) => {
+        setLocationList(response.data);
+      });
+  }, [locationInput, stateCode, countryCode]);
+
   // Current day weather data
   useEffect(() => {
     axios
@@ -84,31 +81,6 @@ export default function Weather() {
       });
   }, [latitude, longitude, weatherApiKey]);
 
-  const handleChange = (e) => {
-    setLocationInput(e.target.value);
-    setListOpen(true);
-  };
-
-  let countryCode = '';
-  let stateCode = '';
-
-  useEffect(() => {
-    axios
-      .get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${locationInput},${stateCode},${countryCode}&limit=5&appid=${weatherApiKey}`
-      )
-      .then((response) => {
-        setLocationList(response.data);
-      });
-  }, [locationInput, stateCode, countryCode]);
-
-  const handleListSelection = (e, location) => {
-    setLocationInput(`${location.name}, ${location.country}`);
-    setLatitude(location.lat);
-    setLongitude(location.lon);
-    setListOpen(false);
-  };
-
   // codes given by api for extreme weather events
   const extremeWeatherCodes = [
     200, 201, 202, 210, 211, 212, 221, 230, 231, 232, 312, 314, 504, 522, 602,
@@ -119,31 +91,10 @@ export default function Weather() {
     <div>
       <div className={styles.container}>
         <Navbar />
-        <div className={styles.header_container}>
 
-          <h1 className={styles.header_title}>{locationName}</h1>
-          <h2 className={styles.header_temperature}>{weatherData?.main?.temp.toFixed(0)}°</h2>
-          <p>{weatherData?.weather[0]?.description}</p>
-        </div>
-        <div className={styles.input_form_container}>
-          <form className={styles.input_form}>
-              <CustomTextInput value={locationInput} onChange={handleChange}/>
-              {listOpen &&
-                locationList.map((location, index) => (
-                  <div
-                    className={styles.location_list_item}
-                    key={index}
-                    onClick={(e) => {
-                      handleListSelection(e, location);
-                    }}
-                  >
-                    <p className={styles.list_item}>
-                      {location.name}, {location.country}
-                    </p>
-                  </div>
-                ))}
-          </form>
-        </div>
+        <WeatherHeader weatherData={weatherData} listOpen={listOpen} locationInput={locationInput} 
+          locationList={locationList} locationName={locationName} setLocationInput={setLocationInput}
+          setLatitude={setLatitude} setLongitude={setLongitude} setListOpen={setListOpen}/>
     
         <motion.div
             style={{ display: 'flex', justifyContent: "center" }}
@@ -153,23 +104,7 @@ export default function Weather() {
             dragControls={dragControls}
           >
           <div className={styles.widgets_container}>
-            <WeatherWidget elements={[<div className={styles.widget_item}>
-                  <h1 style={{marginRight: "auto"}}>Today</h1>
-                  <h1>{futureTemps ? `${futureTemps[0]}°C` : <p>Loading...</p>}</h1>
-              </div>, <div className={styles.widget_item}>
-                  <h1 style={{marginRight: "auto"}}>Tomorrow</h1>
-                  <h1>{futureTemps ? `${Math.round(futureTemps[1])}°C` : <p>Loading...</p>}</h1>
-              </div>, <div className={styles.widget_item}>
-                  <h1 style={{marginRight: "auto"}}>{futureDays[2]}</h1>
-                  <h1>{futureTemps ?  `${Math.round(futureTemps[2])}°C` : <p>Loading...</p>}</h1>
-              </div>, <div className={styles.widget_item}>
-                  <h1 style={{marginRight: "auto"}}>{futureDays[3]}</h1>
-                  <h1>{futureTemps ?  `${Math.round(futureTemps[3])}°C` : <p>Loading...</p>}</h1>
-              </div>, <div className={styles.widget_item}>
-                  <h1 style={{marginRight: "auto"}}>{futureDays[4]}</h1>
-                  <h1>{futureTemps ?  `${Math.round(futureTemps[4])}°C` : <p>Loading...</p>}</h1>
-              </div>]}
-            />
+            <WeatherDaysWidget futureTemps={futureTemps}/>
 
             <WeatherWidget elements={[<WeatherGraph latitude={latitude} longitude={longitude} 
               futureTemps={futureTemps} setFutureTemps={setFutureTemps} 
