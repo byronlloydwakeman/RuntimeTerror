@@ -71,6 +71,43 @@ export default function Weather() {
       });
   }, [locationInput, stateCode, countryCode]);
 
+  useEffect(() => {
+    // Find the div element by its ID or class
+    const divElement = document.getElementById('weather-container'); // Replace 'yourDivId' with the actual ID of your div
+
+    const weatherImagePairs = [{
+      "name": "Thunderstorm",
+      "image": "https://zenitube.com/img/posts/2016/storm-gif/storm-gif10.gif"
+    }, {
+      "name": "Drizzle",
+      "image": "https://i.pinimg.com/originals/e6/18/95/e618957b8c16e662392bd086a2d94f3c.gif"
+    },{
+      "name": "Rain",
+      "image": "https://i.pinimg.com/originals/e6/18/95/e618957b8c16e662392bd086a2d94f3c.gif"
+    },{
+      "name": "Snow",
+      "image": "https://th.bing.com/th/id/R.06c2dbb8ba84eb51b87ac04d25e09288?rik=UzCRPhm3Z4V9lA&pid=ImgRaw&r=0"
+    },{
+      "name": "Atmosphere",
+      "image": "https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif"
+    },{
+      "name": "Clear",
+      "image": "https://static.vecteezy.com/system/resources/previews/003/692/649/large_2x/beautiful-clear-blue-sky-in-summer-look-lke-heaven-free-photo.jpg"
+    },{
+      "name": "Clouds",
+      "image": "https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif"
+    },]
+
+    const currentWeather = weatherData?.weather[0]?.main;
+
+    // Define the new background image URL
+    const newBackgroundImageUrl = weatherImagePairs.find(pair => pair.name === currentWeather)?.image;
+    
+    console.log(newBackgroundImageUrl);
+
+    divElement.style.backgroundImage = `url("${newBackgroundImageUrl}")`;
+  }, [weatherData])
+
   const handleListSelection = (e, location) => {
     setLocationInput(`${location.name}, ${location.country}`);
     setLatitude(location.lat);
@@ -86,7 +123,7 @@ export default function Weather() {
 
   return (
     <div>
-      <div className={styles.container}>
+      <div id="weather-container" className={styles.container}>
         <Navbar />
         <div className={styles.header_container}>
 
@@ -122,7 +159,7 @@ export default function Weather() {
             dragControls={dragControls}
           >
           <div className={styles.widgets_container}>
-            <WeatherWidget elements={[<div className={styles.widget_item}>
+            {/* <WeatherWidget elements={[<div className={styles.widget_item}>
                   <h1>Today</h1>
                   <h1>13C</h1>
               </div>, <div className={styles.widget_item}>
@@ -132,7 +169,7 @@ export default function Weather() {
                   <h1>Today</h1>
                   <h1>13C</h1>
               </div>]}
-            />
+            /> */}
 
             <WeatherWidget elements={[<WeatherGraph latitude={latitude} longitude={longitude} />]} />
 
