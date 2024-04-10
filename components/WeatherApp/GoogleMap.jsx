@@ -45,5 +45,16 @@ export const GoogleMap = (coords) => {
 
   console.log(coords.temp);
 
-  return <div style={{ height: '600px' }} ref={mapRef}></div>;
+  return (
+    <div
+      style={{
+        height: '600px',
+        width: '600px',
+        margin: 'auto',
+        borderRadius: '20px',
+        marginBottom: '65px',
+      }}
+      ref={mapRef}
+    ></div>
+  );
 };

@@ -44,7 +44,7 @@
   }
 
   .header_title{
-    margin: 40px 0 10px 0;
+    margin: 40px 0 0px 0;
     font-size: 24px;
     text-shadow: 0 0 20px $text-shadow;
   }
@@ -55,6 +55,10 @@
     font-family: "Reddit Mono", monospace;
     letter-spacing: -5px;
     text-shadow: 0 0 20px $text-shadow;
+  }
+
+  .header_description{
+    font-size: 20px;
   }
 
   .widgets_container{

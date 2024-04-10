@@ -146,7 +146,9 @@ export default function Weather() {
           <h2 className={styles.header_temperature}>
             {weatherData?.main?.temp.toFixed(0)}°
           </h2>
-          <p>{weatherData?.weather[0]?.description}</p>
+          <p className={styles.header_description}>
+            {weatherData?.weather[0]?.description}
+          </p>
         </div>
         <div className={styles.input_form_container}>
           <form className={styles.input_form}>
