@@ -197,23 +197,24 @@ export default function Weather() {
             <WeatherWidget
               elements={[
                 <div className={styles.widget_item}>
-                  <p>Humidity: {weatherData?.main?.humidity}</p>
+                  <span className={styles.weather_state}>
+                    Weather State: {weatherData?.weather[0]?.main}{' '}
+                    <img
+                      src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
+                    />
+                  </span>
                 </div>,
+
                 <div className={styles.widget_item}>
                   <p>Wind speed: {weatherData?.wind?.speed} m/s</p>
                 </div>,
                 <div className={styles.widget_item}>
                   <p>Precipitation: {weatherData?.wind?.speed}</p>
                 </div>,
-                <>
-                  <p>Weather State: {weatherData?.weather[0]?.main}</p>
-                  <p>
-                    Weather Icon:{' '}
-                    <img
-                      src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
-                    />
-                  </p>
-                </>,
+                <div className={styles.widget_item}>
+                  <p>Humidity: {weatherData?.main?.humidity}</p>
+                </div>,
+                ,
               ]}
             />
           </div>

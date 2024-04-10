@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { SweepButton } from './SweepButton';
-import styles from "./weathergraph.module.scss";
+import styles from './weathergraph.module.scss';
 import axios from 'axios';
 
 export const WeatherGraph = (coords) => {
@@ -73,35 +73,35 @@ export const WeatherGraph = (coords) => {
   return (
     <>
       {futureTemps && futureTempsFarenheit ? (
-        <div className={styles.weather_graph__container}> 
+        <div className={styles.weather_graph__container}>
           {displayCelsius ? (
             <>
               <LineChart
-              sx={{
-                //change left yAxis label styles
-                "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
-                  strokeWidth:"0.4",
-                  fill:"#FFFFFF"
-                },
-                "& .MuiChartsAxis-label": {
-                  color:"#FFFFFF"
-                },
-                // change bottom label styles
-                "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
-                    strokeWidth:"0.5",
-                    fill:"#FFFFFF"
-                 },
+                sx={{
+                  //change left yAxis label styles
+                  '& .MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
+                    strokeWidth: '0.4',
+                    fill: '#FFFFFF',
+                  },
+                  '& .MuiChartsAxis-label': {
+                    color: '#FFFFFF',
+                  },
+                  // change bottom label styles
+                  '& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
+                    strokeWidth: '0.5',
+                    fill: '#FFFFFF',
+                  },
                   // bottomAxis Line Styles
-                 "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                    stroke:"#FFFFFF",
-                    strokeWidth:0.4
-                 },
-                 // leftAxis Line Styles
-                 "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                    stroke:"#FFFFFF",
-                    strokeWidth:0.4
-                 }
-              }}
+                  '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                    stroke: '#FFFFFF',
+                    strokeWidth: 0.4,
+                  },
+                  // leftAxis Line Styles
+                  '& .MuiChartsAxis-left .MuiChartsAxis-line': {
+                    stroke: '#FFFFFF',
+                    strokeWidth: 0.4,
+                  },
+                }}
                 xAxis={[
                   {
                     data: dates,
@@ -115,14 +115,19 @@ export const WeatherGraph = (coords) => {
                 series={[
                   {
                     data: futureTemps,
-                    color: '#76b7b2'
+                    color: '#76b7b2',
                   },
                 ]}
                 width={500}
                 height={300}
               />
               <div className={styles.convert_button__container}>
-                <SweepButton Content={"Switch to Farenheit (°F)"} Function={() => {setDisplayCelsius(false);}}/>
+                <SweepButton
+                  Content={'Switch to Farenheit (°F)'}
+                  Function={() => {
+                    setDisplayCelsius(false);
+                  }}
+                />
               </div>
             </>
           ) : (
@@ -130,28 +135,28 @@ export const WeatherGraph = (coords) => {
               <LineChart
                 sx={{
                   //change left yAxis label styles
-                  "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
-                    strokeWidth:"0.4",
-                    fill:"#FFFFFF"
+                  '& .MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
+                    strokeWidth: '0.4',
+                    fill: '#FFFFFF',
                   },
-                  "& .MuiChartsAxis-label": {
-                    color:"#FFFFFF"
+                  '& .MuiChartsAxis-label': {
+                    color: '#FFFFFF',
                   },
                   // change bottom label styles
-                  "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
-                      strokeWidth:"0.5",
-                      fill:"#FFFFFF"
-                    },
-                    // bottomAxis Line Styles
-                    "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                      stroke:"#FFFFFF",
-                      strokeWidth:0.4
-                    },
-                    // leftAxis Line Styles
-                    "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                      stroke:"#FFFFFF",
-                      strokeWidth:0.4
-                    }
+                  '& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
+                    strokeWidth: '0.5',
+                    fill: '#FFFFFF',
+                  },
+                  // bottomAxis Line Styles
+                  '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                    stroke: '#FFFFFF',
+                    strokeWidth: 0.4,
+                  },
+                  // leftAxis Line Styles
+                  '& .MuiChartsAxis-left .MuiChartsAxis-line': {
+                    stroke: '#FFFFFF',
+                    strokeWidth: 0.4,
+                  },
                 }}
                 xAxis={[
                   {
@@ -166,14 +171,19 @@ export const WeatherGraph = (coords) => {
                 series={[
                   {
                     data: futureTempsFarenheit,
-                    color: '#76b7b2'
+                    color: '#76b7b2',
                   },
                 ]}
                 width={500}
                 height={300}
               />
               <div className={styles.convert_button__container}>
-                <SweepButton Content={"Switch to Celsius (°C)"} Function={() => {setDisplayCelsius(true)}}/>
+                <SweepButton
+                  Content={'Switch to Celsius (°C)'}
+                  Function={() => {
+                    setDisplayCelsius(true);
+                  }}
+                />
               </div>
             </div>
           )}
