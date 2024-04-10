@@ -25,7 +25,8 @@ export const GoogleMap = (coords) => {
       };
 
       // map options
-
+      const image =
+        'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
       const mapOptions = {
         center: position,
         zoom: 10,
@@ -37,6 +38,7 @@ export const GoogleMap = (coords) => {
       const marker = new AdvancedMarkerElement({
         map,
         position: { lat: coords.latitude, lng: coords.longitude },
+        title: coords.temp,
       });
     };
 
@@ -49,7 +51,7 @@ export const GoogleMap = (coords) => {
     <div
       style={{
         height: '600px',
-        width: '600px',
+        width: '1200px',
         margin: 'auto',
         borderRadius: '20px',
         marginBottom: '65px',
