@@ -235,6 +235,8 @@ export default function Weather() {
           latitude={latitude}
           longitude={longitude}
           temp={`${weatherData?.main?.temp.toFixed(0)}°C`}
+          description={weatherData?.weather[0]?.description}
+          weatherIcon={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
         />
       </div>
       <NavbarBottom />

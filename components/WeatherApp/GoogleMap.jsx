@@ -19,14 +19,15 @@ export const GoogleMap = (coords) => {
       const { AdvancedMarkerElement } = await google.maps.importLibrary(
         'marker'
       );
+      const { PinElement } = await google.maps.importLibrary('marker');
+
       const position = {
         lat: coords.latitude,
         lng: coords.longitude,
       };
 
       // map options
-      const image =
-        'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+
       const mapOptions = {
         center: position,
         zoom: 10,
@@ -35,10 +36,20 @@ export const GoogleMap = (coords) => {
 
       const map = new Map(mapRef.current, mapOptions);
 
+      const weatherIcon = document.createElement('img');
+      weatherIcon.src = coords.weatherIcon;
+      const glyphSvgPinElement = new PinElement({
+        glyph: weatherIcon,
+        scale: 2,
+        borderColor: '#045149',
+        background: '#78706E',
+      });
+
       const marker = new AdvancedMarkerElement({
         map,
         position: { lat: coords.latitude, lng: coords.longitude },
-        title: coords.temp,
+        content: glyphSvgPinElement.element,
+        title: `The current weather is ${coords.description}, with a temperature of ${coords.temp}.`,
       });
     };
 
