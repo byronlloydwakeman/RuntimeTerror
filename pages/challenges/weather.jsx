@@ -172,15 +172,8 @@ export default function Weather() {
           </form>
         </div>
 
-        <motion.div
-          style={{ display: 'flex', justifyContent: 'center' }}
-          drag
-          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-          dragElastic={0.5}
-          dragControls={dragControls}
-        >
-          <div className={styles.widgets_container}>
-            {/* <WeatherWidget elements={[<div className={styles.widget_item}>
+        <div className={styles.widgets_container}>
+          {/* <WeatherWidget elements={[<div className={styles.widget_item}>
                   <h1>Today</h1>
                   <h1>13C</h1>
               </div>, <div className={styles.widget_item}>
@@ -192,46 +185,45 @@ export default function Weather() {
               </div>]}
             /> */}
 
-            <WeatherWidget
-              elements={[
-                <WeatherGraph latitude={latitude} longitude={longitude} />,
-              ]}
-            />
+          <WeatherWidget
+            elements={[
+              <WeatherGraph latitude={latitude} longitude={longitude} />,
+            ]}
+          />
 
-            {weatherData && (
-              <div>
-                {extremeWeatherCodes.includes(weatherCode) && (
-                  <div className={styles.extreme_weather}>
-                    Extreme weather alert!!
-                  </div>
-                )}
-              </div>
-            )}
-            <WeatherWidget
-              elements={[
-                <div className={styles.widget_item}>
-                  <span className={styles.weather_state}>
-                    {weatherData?.weather[0]?.main}{' '}
-                    <img
-                      src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
-                    />
-                  </span>
-                </div>,
+          {weatherData && (
+            <div>
+              {extremeWeatherCodes.includes(weatherCode) && (
+                <div className={styles.extreme_weather}>
+                  Extreme weather alert!!
+                </div>
+              )}
+            </div>
+          )}
+          <WeatherWidget
+            elements={[
+              <div className={styles.widget_item}>
+                <span className={styles.weather_state}>
+                  {weatherData?.weather[0]?.main}{' '}
+                  <img
+                    src={`https://openweathermap.org/img/wn/${weatherData?.weather[0].icon}.png`}
+                  />
+                </span>
+              </div>,
 
-                <div className={styles.widget_item}>
-                  <p>Wind speed: {weatherData?.wind?.speed} km/h</p>
-                </div>,
-                <div className={styles.widget_item}>
-                  <p>Precipitation: {weatherData?.wind?.speed.toFixed(1)} mm</p>
-                </div>,
-                <div className={styles.widget_item}>
-                  <p>Humidity: {weatherData?.main?.humidity}%</p>
-                </div>,
-                ,
-              ]}
-            />
-          </div>
-        </motion.div>
+              <div className={styles.widget_item}>
+                <p>Wind speed: {weatherData?.wind?.speed} km/h</p>
+              </div>,
+              <div className={styles.widget_item}>
+                <p>Precipitation: {weatherData?.wind?.speed.toFixed(1)} mm</p>
+              </div>,
+              <div className={styles.widget_item}>
+                <p>Humidity: {weatherData?.main?.humidity}%</p>
+              </div>,
+              ,
+            ]}
+          />
+        </div>
 
         <GoogleMap
           latitude={latitude}
