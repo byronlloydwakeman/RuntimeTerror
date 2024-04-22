@@ -23,7 +23,12 @@
     height: 100%;
     border-radius: 50%;
     position: absolute;
-    background-color: red; /* Change color as needed */
-    // transform: translateY(0px) !important;
+        &.green {
+            background-color: mediumspringgreen;
+        }
+
+        &.red {
+            background-color: lightcoral;
+        }
   }
   
