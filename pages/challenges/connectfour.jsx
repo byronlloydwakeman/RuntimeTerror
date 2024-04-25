@@ -150,7 +150,7 @@ const ConnectFour = () => {
     <div>
       <div>
         <Navbar />
-        <div className={styles.mainContainer}>
+        <div className={styles.main_container}>
           <div className={styles.board}>
             {board.map((column, colIndex) => (
               <div
@@ -179,10 +179,10 @@ const ConnectFour = () => {
               </div>
             ))}
           </div>
-          <div className={styles.gameInformation}>
-            <p>{gameState}</p>
-            <p>Player 1: {player1WinCount}</p>
-            <p>Player 2: {player2WinCount}</p>
+          <div className={styles.game_information}>
+            <h1 className={styles.game_state}>{gameState}</h1>
+            <h1 className={styles.player_state}>Player 1: {player1WinCount}</h1>
+            <h1 className={styles.player_state}>Player 2: {player2WinCount}</h1>
             <Button size="small" sx={buttonStyle.Button} onClick={resetBoard}>
               Reset Board
             </Button>

@@ -1,6 +1,6 @@
 @import '../../styles/style.scss';
 /* ConnectFourBoard.module.scss */
-.mainContainer{
+.main_container{
   background-color: $soft-grey;
   height: 94.75vh;
   width: 100vw;
@@ -40,12 +40,22 @@
         }
   }
 
-  .gameInformation{
+  .game_information{
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
     align-items: center;
+
+    .game_state {
+      color: $forest-green;
+      margin: 25px;
+    }
+
+    .player_state {
+      margin: 15px;
+      font-size: 24px;
+    }
 
   }
   
