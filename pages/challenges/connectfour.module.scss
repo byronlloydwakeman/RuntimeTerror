@@ -1,7 +1,15 @@
+@import '../../styles/style.scss';
 /* ConnectFourBoard.module.scss */
+.mainContainer{
+  background-color: $soft-grey;
+  height: 94.75vh;
+  width: 100vw;
+  margin: 0;
+  padding-top: 20px;
 
-.board {
+  .board {
     display: flex;
+    justify-content: center;
   }
   
   .column {
@@ -31,4 +39,14 @@
             background-color: lightcoral;
         }
   }
+
+  .gameInformation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+  }
   
+}
