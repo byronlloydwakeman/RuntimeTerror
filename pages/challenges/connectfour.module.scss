@@ -5,25 +5,30 @@
   height: 94.75vh;
   width: 100vw;
   margin: 0;
-  padding-top: 20px;
+  padding-top: 50px;
 
   .board {
     display: flex;
-    justify-content: center;
+    margin: auto;
+    background-color: blue;
+    width: 370px;
+    align-self: center;
+    padding: 10px 10px;
+    border-radius: 10px;
   }
   
   .column {
     display: flex;
     flex-direction: column-reverse;
-    border: 1px solid #000;
   }
   
   .cell {
     width: 50px;
     height: 50px;
-    border: 1px solid #000;
-    background-color: transparent;
+    border: 2px solid blue;
+    background-color: white;
     position: relative; /* Ensure position relative for absolute positioning of disc */
+    border-radius: 50%;
   }
   
   .disc {
@@ -38,6 +43,7 @@
         &.red {
             background-color: lightcoral;
         }
+        z-index: 10;
   }
 
   .game_information{
@@ -55,6 +61,11 @@
     .player_state {
       margin: 15px;
       font-size: 24px;
+    }
+
+    .button_group {
+      display: flex;
+      gap: 20px;
     }
 
   }

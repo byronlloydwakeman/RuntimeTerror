@@ -21,10 +21,16 @@ const ConnectFour = () => {
   const [player1WinCount, setPlayer1WinCount] = useState(0);
   const [player2WinCount, setPlayer2WinCount] = useState(0);
   const [gameState, setGameState] = useState('Match in progress...');
+  const [cpuEnabled, setCpuEnabled] = useState(false);
 
   const discAnimationControls = useAnimation(); // Animation controls for the disc
 
   const handleColumnClick = async (col) => {
+    if (cpuEnabled && !player1Go) {
+      setTimeout(() => {
+        console.log('waiting');
+      }, 2000);
+    }
     // Find the lowest available row in the clicked column
     const rowIndex = board[col].indexOf(null);
     if (rowIndex !== -1) {
@@ -110,7 +116,7 @@ const ConnectFour = () => {
     }
     setTimeout(() => {
       resetBoard();
-    }, 1000);
+    }, 1500);
   };
 
   const resetBoard = () => {
@@ -129,8 +135,6 @@ const ConnectFour = () => {
     diagonalWinCheckDesc(array);
   };
 
-  console.log(board);
-
   const buttonStyle = {
     Button: {
       color: '#045149',
@@ -145,6 +149,15 @@ const ConnectFour = () => {
       },
     },
   };
+
+  const handleCpu = () => {
+    setCpuEnabled(!cpuEnabled);
+  };
+
+  if (!player1Go && cpuEnabled) {
+    const randomColIndex = Math.floor(Math.random() * 6);
+    handleColumnClick(randomColIndex);
+  }
 
   return (
     <div>
@@ -183,9 +196,28 @@ const ConnectFour = () => {
             <h1 className={styles.game_state}>{gameState}</h1>
             <h1 className={styles.player_state}>Player 1: {player1WinCount}</h1>
             <h1 className={styles.player_state}>Player 2: {player2WinCount}</h1>
-            <Button size="small" sx={buttonStyle.Button} onClick={resetBoard}>
-              Reset Board
-            </Button>
+            <div className={styles.button_group}>
+              <Button size="small" sx={buttonStyle.Button} onClick={resetBoard}>
+                Reset Board
+              </Button>
+              {!cpuEnabled ? (
+                <Button
+                  size="small"
+                  sx={buttonStyle.Button}
+                  onClick={handleCpu}
+                >
+                  Enable CPU
+                </Button>
+              ) : (
+                <Button
+                  size="small"
+                  sx={buttonStyle.Button}
+                  onClick={handleCpu}
+                >
+                  Disable CPU
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
