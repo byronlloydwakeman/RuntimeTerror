@@ -20,7 +20,7 @@ const ConnectFour = () => {
   );
   const [player1WinCount, setPlayer1WinCount] = useState(0);
   const [player2WinCount, setPlayer2WinCount] = useState(0);
-  const [gameState, setGameState] = useState('Player 1 to start...');
+  const [gameState, setGameState] = useState('Red to start...');
   const [cpuEnabled, setCpuEnabled] = useState(false);
 
   const discAnimationControls = useAnimation(); // Animation controls for the disc
