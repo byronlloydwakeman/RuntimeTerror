@@ -20,17 +20,12 @@ const ConnectFour = () => {
   );
   const [player1WinCount, setPlayer1WinCount] = useState(0);
   const [player2WinCount, setPlayer2WinCount] = useState(0);
-  const [gameState, setGameState] = useState('Match in progress...');
+  const [gameState, setGameState] = useState('Player 1 to start...');
   const [cpuEnabled, setCpuEnabled] = useState(false);
 
   const discAnimationControls = useAnimation(); // Animation controls for the disc
 
   const handleColumnClick = async (col) => {
-    if (cpuEnabled && !player1Go) {
-      setTimeout(() => {
-        console.log('waiting');
-      }, 2000);
-    }
     // Find the lowest available row in the clicked column
     const rowIndex = board[col].indexOf(null);
     if (rowIndex !== -1) {
@@ -45,9 +40,17 @@ const ConnectFour = () => {
       setDiscColors(newDiscColors);
 
       setPlayer1Go(!player1Go); // Toggle player's turn
+      player1Go ? setGameState('Green turn...') : setGameState('Red turn...');
     }
 
     checkWin(board);
+
+    if (cpuEnabled && !player1Go) {
+      setTimeout(() => {
+        const randomColIndex = Math.floor(Math.random() * 6);
+        handleColumnClick(randomColIndex);
+      }, 1000);
+    }
   };
 
   const horizontalWinCheck = (array) => {
@@ -109,10 +112,10 @@ const ConnectFour = () => {
   const playerWinLogic = (player1Go) => {
     if (player1Go) {
       setPlayer1WinCount(player1WinCount + 1);
-      setGameState('Player 1 wins!');
+      setGameState('Red wins!');
     } else {
       setPlayer2WinCount(player2WinCount + 1);
-      setGameState('Player 2 wins!');
+      setGameState('Green wins!');
     }
     setTimeout(() => {
       resetBoard();
@@ -125,7 +128,11 @@ const ConnectFour = () => {
         new Array(ROW_COUNT).fill(null)
       )
     );
-    setGameState('Match in progress...');
+    if (player1Go) {
+      setGameState('Red to start...');
+    } else {
+      setGameState('Green to start...');
+    }
   };
 
   const checkWin = (array) => {
@@ -154,10 +161,20 @@ const ConnectFour = () => {
     setCpuEnabled(!cpuEnabled);
   };
 
-  if (!player1Go && cpuEnabled) {
-    const randomColIndex = Math.floor(Math.random() * 6);
-    handleColumnClick(randomColIndex);
+  const switchTurns = () => {
+    setPlayer1Go(!player1Go);
+    if (player1Go) {
+      setGameState('Green to start...');
+    } else {
+      setGameState('Red to start...');
+    }
+  };
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
+
+  console.log(board);
 
   return (
     <div>
@@ -194,8 +211,8 @@ const ConnectFour = () => {
           </div>
           <div className={styles.game_information}>
             <h1 className={styles.game_state}>{gameState}</h1>
-            <h1 className={styles.player_state}>Player 1: {player1WinCount}</h1>
-            <h1 className={styles.player_state}>Player 2: {player2WinCount}</h1>
+            <h1 className={styles.player_state}>Red: {player1WinCount}</h1>
+            <h1 className={styles.player_state}>Green: {player2WinCount}</h1>
             <div className={styles.button_group}>
               <Button size="small" sx={buttonStyle.Button} onClick={resetBoard}>
                 Reset Board
@@ -215,6 +232,25 @@ const ConnectFour = () => {
                   onClick={handleCpu}
                 >
                   Disable CPU
+                </Button>
+              )}
+              {gameState == 'Red to start...' ||
+              gameState == 'Green to start...' ? (
+                <Button
+                  size="small"
+                  sx={buttonStyle.Button}
+                  onClick={switchTurns}
+                >
+                  Switch Turns
+                </Button>
+              ) : (
+                <Button
+                  size="small"
+                  sx={buttonStyle.Button}
+                  onClick={switchTurns}
+                  disabled
+                >
+                  Switch Turns
                 </Button>
               )}
             </div>
