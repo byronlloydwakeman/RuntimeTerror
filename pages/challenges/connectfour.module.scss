@@ -17,11 +17,13 @@
     align-self: center;
     padding: 10px 10px;
     border-radius: 10px;
+    z-index: 0;
   }
   
   .column {
     display: flex;
     flex-direction: column-reverse;
+    z-index: 1;
   }
   
   .cell {
@@ -31,6 +33,7 @@
     background-color: white;
     position: relative; /* Ensure position relative for absolute positioning of disc */
     border-radius: 50%;
+    z-index: 2;
   }
   
   .disc {
@@ -45,7 +48,7 @@
         &.red {
             background-color: lightcoral;
         }
-    z-index: 10;
+    z-index: -1;
   }
 
   .game_information{
