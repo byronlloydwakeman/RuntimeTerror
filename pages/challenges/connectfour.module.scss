@@ -10,7 +10,9 @@
   .board {
     display: flex;
     margin: auto;
-    background-color: blue;
+    background-image: url("../../public/imgs/connect-four-background.png");
+    background-size: cover; /* Cover the entire container while maintaining aspect ratio */
+    background-position: center; /* Center the background image within the container */
     width: 370px;
     align-self: center;
     padding: 10px 10px;
