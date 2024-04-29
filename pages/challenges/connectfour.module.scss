@@ -1,5 +1,23 @@
 @import '../../styles/style.scss';
 /* ConnectFourBoard.module.scss */
+.test_board{
+  margin: auto;
+  background-image: url("../../public/imgs/connect-four-background.png");
+  background-size: cover; /* Cover the entire container while maintaining aspect ratio */
+  background-position: center; /* Center the background image within the container */
+  width: 350px;
+  height: 350px;
+  align-self: center;
+  padding: 10px 10px;
+  border-radius: 10px;
+  z-index: 99;
+  position: relative;
+  pointer-events: none;
+  top: 50%;
+  left: 32%;
+  position: fixed;
+}
+
 .main_container{
   background-color: $soft-grey;
   height: 94.75vh;
@@ -8,16 +26,15 @@
   padding-top: 50px;
 
   .board {
+    position: fixed;
     display: flex;
     margin: auto;
-    background-image: url("../../public/imgs/connect-four-background.png");
-    background-size: cover; /* Cover the entire container while maintaining aspect ratio */
-    background-position: center; /* Center the background image within the container */
     width: 370px;
     align-self: center;
-    padding: 10px 10px;
     border-radius: 10px;
     z-index: 0;
+    top: 50%;
+    left: 32%;
   }
   
   .column {
@@ -27,13 +44,12 @@
   }
   
   .cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid blue;
-    background-color: white;
+    width: 46px;
+    height: 46px;
     position: relative; /* Ensure position relative for absolute positioning of disc */
     border-radius: 50%;
     z-index: 2;
+    margin: 2px;
   }
   
   .disc {
