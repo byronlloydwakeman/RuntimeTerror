@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbars/Navbar';
 import NavbarBottom from '../../components/Navbars/NavbarBottom';
 import { Button } from '@mui/material';
 import { findBestMove } from '../../components/ConnectFour/minimax';
+import { getBestColumn } from '../../components/ConnectFour/minimaxMarkII';
 
 const COLUMN_COUNT = 7;
 const ROW_COUNT = 6;
@@ -176,11 +177,7 @@ const ConnectFour = () => {
   useEffect(() => {
     if (!player1Go && cpuEnabled && !hasWon) {
       console.log(board);
-      var cpuMove = findBestMove(
-        board.map((row) => row.slice()),
-        5,
-        player1Go
-      );
+      var cpuMove = getBestColumn(board, player1Go);
       console.log(cpuMove);
       setTimeout(() => {
         var doc = document.getElementById(`${cpuMove}-0`);
