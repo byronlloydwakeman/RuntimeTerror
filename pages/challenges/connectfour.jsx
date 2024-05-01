@@ -166,7 +166,15 @@ const ConnectFour = () => {
       setGameState('Red to start...');
     }
   };
-  
+
+
+  useEffect(() => {
+    if (!player1Go){
+      
+    }
+  }, [switchTurns])
+
+  // The CPU's go effectively
   useEffect(() => {
     if (!player1Go && cpuEnabled && !hasWon){
       console.log(board)
@@ -238,13 +246,24 @@ const ConnectFour = () => {
                 Reset Board
               </Button>
               {!cpuEnabled ? (
-                <Button
-                  size="small"
-                  sx={buttonStyle.Button}
-                  onClick={handleCpu}
-                >
-                  Enable CPU
-                </Button>
+                !player1Go ? (
+                  <Button
+                    size="small"
+                    sx={buttonStyle.Button}
+                    onClick={handleCpu}
+                    disabled
+                  >
+                    Enable CPU
+                  </Button>
+                ) : (
+                  <Button
+                    size="small"
+                    sx={buttonStyle.Button}
+                    onClick={handleCpu}
+                  >
+                    Enable CPU
+                  </Button>
+                )
               ) : (
                 <Button
                   size="small"
