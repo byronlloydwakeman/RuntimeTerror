@@ -181,9 +181,7 @@ const ConnectFour = () => {
       <div>
         <Navbar />
         <div className={styles.main_container}>
-          <div className={styles.test_board}>
-
-          </div>
+          <div className={styles.test_board}></div>
           <div className={styles.board}>
             {board.map((column, colIndex) => (
               <div
@@ -193,7 +191,10 @@ const ConnectFour = () => {
                   await handleColumnClick(colIndex);
                   await discAnimationControls.start({
                     y: 0,
-                    transition: { duration: 0.5, ease: [0.39, 0.575, 0.565, 1] },
+                    transition: {
+                      duration: 0.5,
+                      ease: [0.39, 0.575, 0.565, 1],
+                    },
                   });
                 }}
               >
