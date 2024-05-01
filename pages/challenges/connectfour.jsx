@@ -167,37 +167,39 @@ const ConnectFour = () => {
     }
   };
 
-
   useEffect(() => {
-    if (!player1Go){
-      
+    if (!player1Go) {
     }
-  }, [switchTurns])
+  }, [switchTurns]);
 
   // The CPU's go effectively
   useEffect(() => {
-    if (!player1Go && cpuEnabled && !hasWon){
-      console.log(board)
-      var cpuMove = findBestMove(board.map(row => row.slice()), 5, player1Go);
+    if (!player1Go && cpuEnabled && !hasWon) {
+      console.log(board);
+      var cpuMove = findBestMove(
+        board.map((row) => row.slice()),
+        5,
+        player1Go
+      );
       console.log(cpuMove);
       setTimeout(() => {
         var doc = document.getElementById(`${cpuMove}-0`);
         // Check if the UI element exists
         if (doc) {
           // Create and dispatch a click event
-          const clickEvent = new MouseEvent("click", {
-              bubbles: true,
-              cancelable: true,
-              view: window
+          const clickEvent = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window,
           });
           doc.dispatchEvent(clickEvent);
-          console.log("clicked");
+          console.log('clicked');
         } else {
-          console.error("UI element not found");
+          console.error('UI element not found');
         }
-      }, 500)
+      }, 500);
     }
-  }, [player1Go])
+  }, [player1Go]);
 
   return (
     <div>
@@ -223,7 +225,11 @@ const ConnectFour = () => {
                 }}
               >
                 {column.map((cell, rowIndex) => (
-                  <div id={`${colIndex}-${rowIndex}`} key={rowIndex} className={styles.cell}>
+                  <div
+                    id={`${colIndex}-${rowIndex}`}
+                    key={rowIndex}
+                    className={styles.cell}
+                  >
                     {cell && (
                       <motion.div
                         className={`${styles.disc} ${discColors[colIndex][rowIndex]}`} // Use discColors to determine the color class
