@@ -20,6 +20,13 @@
       "tags": ["APIs", "UI", "UX"],
       "description": "A weather app that forecasts the weather for a given city.",
       "link": "/challenges/weather"
+    },
+    {
+      "week": "Week 4",
+      "title": "Connect Four",
+      "tags": ["Algorithms", "Game design"],
+      "description": "A connect four game with a CPU and versus mode.",
+      "link": "/challenges/connectfour"
     }
   ]
 }

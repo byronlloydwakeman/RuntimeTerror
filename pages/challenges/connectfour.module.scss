@@ -1,0 +1,110 @@
+@import '../../styles/style.scss';
+/* ConnectFourBoard.module.scss */
+.test_board{
+  margin: auto;
+  background-image: url("../../public/imgs/connect-four-background.png");
+  background-size: cover; /* Cover the entire container while maintaining aspect ratio */
+  background-position: center; /* Center the background image within the container */
+  width: 350px;
+  height: 350px;
+  align-self: center;
+  padding: 10px 10px;
+  border-radius: 10px;
+  z-index: 99;
+  position: relative;
+  pointer-events: none;
+  top: 50%;
+  margin-top: -180px;
+  position: fixed;
+  left: 50%;
+  margin-left: -180px;
+
+  @include mobile {
+    top: 70%;
+  }
+
+}
+
+.main_container{
+  background-color: $soft-grey;
+  height: 94.75vh;
+  width: 100vw;
+  margin: 0;
+  padding-top: 50px;
+  min-height: 500px;
+
+  .board {
+    position: fixed;
+    display: flex;
+    margin: auto;
+    width: 370px;
+    align-self: center;
+    border-radius: 10px;
+    z-index: 0;
+    top: 50%;
+    margin-top: -180px;
+    left: 50%;
+    margin-left: -180px;
+
+    @include mobile {
+      top: 70%;
+    }
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column-reverse;
+    z-index: 1;
+  }
+  
+  .cell {
+    width: 46px;
+    height: 46px;
+    position: relative; /* Ensure position relative for absolute positioning of disc */
+    border-radius: 50%;
+    z-index: 2;
+    margin: 2px;
+  }
+  
+  .disc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: absolute;
+        &.green {
+            background-color: mediumspringgreen;
+        }
+
+        &.red {
+            background-color: lightcoral;
+        }
+    z-index: -1;
+  }
+
+  .game_information{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+
+    .game_state {
+      color: black;
+      font-weight: bold;
+      margin: 15px;
+    }
+
+    .player_state {
+      margin: 15px;
+      font-size: 24px;
+    }
+
+    .button_group {
+      display: flex;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+  }
+  
+}
