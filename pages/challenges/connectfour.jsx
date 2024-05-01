@@ -170,12 +170,6 @@ const ConnectFour = () => {
     }
   };
 
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  console.log(board);
-
   return (
     <div>
       <div>
