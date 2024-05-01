@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import styles from './connectfour.module.scss'; // Importing SCSS module
 import { array } from '@google/maps/lib/internal/validate';
 import Navbar from '../../components/Navbars/Navbar';
 import NavbarBottom from '../../components/Navbars/NavbarBottom';
 import { Button } from '@mui/material';
+import { findBestMove } from '../../components/ConnectFour/minimax';
 
 const COLUMN_COUNT = 7;
 const ROW_COUNT = 6;
@@ -44,13 +45,6 @@ const ConnectFour = () => {
     }
 
     checkWin(board);
-
-    if (cpuEnabled && !player1Go) {
-      setTimeout(() => {
-        const randomColIndex = Math.floor(Math.random() * 6);
-        handleColumnClick(randomColIndex);
-      }, 1000);
-    }
   };
 
   const horizontalWinCheck = (array) => {
@@ -174,7 +168,27 @@ const ConnectFour = () => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  console.log(board);
+  useEffect(() => {
+    if (!player1Go && cpuEnabled){
+      var cpuMove = findBestMove(board, 5);
+      setTimeout(() => {
+        var doc = document.getElementById(`${cpuMove}-0`);
+        // Check if the UI element exists
+        if (doc) {
+          // Create and dispatch a click event
+          const clickEvent = new MouseEvent("click", {
+              bubbles: true,
+              cancelable: true,
+              view: window
+          });
+          doc.dispatchEvent(clickEvent);
+          console.log("clicked");
+        } else {
+          console.error("UI element not found");
+        }
+      }, 2000)
+    }
+  }, [player1Go])
 
   return (
     <div>
@@ -185,6 +199,7 @@ const ConnectFour = () => {
           <div className={styles.board}>
             {board.map((column, colIndex) => (
               <div
+                id={colIndex}
                 key={colIndex}
                 className={styles.column}
                 onClick={async () => {
@@ -199,7 +214,7 @@ const ConnectFour = () => {
                 }}
               >
                 {column.map((cell, rowIndex) => (
-                  <div key={rowIndex} className={styles.cell}>
+                  <div id={`${colIndex}-${rowIndex}`} key={rowIndex} className={styles.cell}>
                     {cell && (
                       <motion.div
                         className={`${styles.disc} ${discColors[colIndex][rowIndex]}`} // Use discColors to determine the color class
