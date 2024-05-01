@@ -23,6 +23,7 @@ const ConnectFour = () => {
   const [player2WinCount, setPlayer2WinCount] = useState(0);
   const [gameState, setGameState] = useState('Red to start...');
   const [cpuEnabled, setCpuEnabled] = useState(false);
+  const [hasWon, setHasWon] = useState(false); // The AI likes to have a cheeky extra go at the end
 
   const discAnimationControls = useAnimation(); // Animation controls for the disc
 
@@ -33,7 +34,9 @@ const ConnectFour = () => {
       // Update the board with the disc dropped in the clicked column
       const newBoard = [...board];
       newBoard[col][rowIndex] = player1Go ? '1' : '2'; // Set player1 or player2 depending on the turn
+      console.log(board);
       setBoard(newBoard);
+      console.log(board);
 
       // Update the color of the disc in the corresponding cell
       const newDiscColors = [...discColors];
@@ -104,6 +107,7 @@ const ConnectFour = () => {
   };
 
   const playerWinLogic = (player1Go) => {
+    setHasWon(true);
     if (player1Go) {
       setPlayer1WinCount(player1WinCount + 1);
       setGameState('Red wins!');
@@ -113,6 +117,7 @@ const ConnectFour = () => {
     }
     setTimeout(() => {
       resetBoard();
+      setHasWon(false);
     }, 1500);
   };
 
@@ -122,11 +127,9 @@ const ConnectFour = () => {
         new Array(ROW_COUNT).fill(null)
       )
     );
-    if (player1Go) {
-      setGameState('Red to start...');
-    } else {
-      setGameState('Green to start...');
-    }
+    // Refresh the 'go' state
+    setPlayer1Go(true);
+    setGameState('Red to start...');
   };
 
   const checkWin = (array) => {
@@ -163,14 +166,12 @@ const ConnectFour = () => {
       setGameState('Red to start...');
     }
   };
-
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
+  
   useEffect(() => {
-    if (!player1Go && cpuEnabled){
-      var cpuMove = findBestMove(board, 5);
+    if (!player1Go && cpuEnabled && !hasWon){
+      console.log(board)
+      var cpuMove = findBestMove(board.map(row => row.slice()), 5, player1Go);
+      console.log(cpuMove);
       setTimeout(() => {
         var doc = document.getElementById(`${cpuMove}-0`);
         // Check if the UI element exists
@@ -186,7 +187,7 @@ const ConnectFour = () => {
         } else {
           console.error("UI element not found");
         }
-      }, 2000)
+      }, 500)
     }
   }, [player1Go])
 
