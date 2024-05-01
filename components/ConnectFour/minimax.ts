@@ -1,5 +1,6 @@
-const AI = "2";
-const USER = "1";
+// Default if the user goes first
+var AI = "2";
+var USER = "1";
 
 function checkWinner(board: string[][], player: string): boolean {
     // Check horizontal
@@ -86,10 +87,20 @@ function minimax(board: string[][], depth: number, maximizingPlayer: boolean): n
     }
 }
 
-export function findBestMove(board: string[][], depth: number): number {
-    console.log(board);
+export function findBestMove(board: string[][], depth: number, userGoesFirst: boolean): number {
+
+    if(!userGoesFirst)
+    {
+        AI = "1";
+        USER = "2";
+    }
+
+    console.log(AI)
+    console.log(USER)
+
     let bestMove = -1;
     let bestEval = -Infinity;
+    // Loop through a given column to get the length 
     for (let col = 0; col < board[0].length; col++) {
         if (board[0][col] === null) {
             const newBoard = board.map(row => row.slice());
